@@ -9,7 +9,7 @@ function Scrum(props) {
   //TO DO
   // Do we need to refer to backend when clicking settings?
   // How to logout?
-  // Associating user's stickes w/ their acct and populating them on ws entry
+  // Associating user's stickes w/ their acct and populating them on ws entry ///
 
   // dummy card variable
   const dummyCard = [{

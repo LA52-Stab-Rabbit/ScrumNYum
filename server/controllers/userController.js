@@ -18,6 +18,7 @@ userController.createUser = (req, res, next) => {
 
   db.query(query, [username, password])
     .then((response) => {
+      // insert logic for randomized, more secure ssid
       res.locals.id = username;
       return next();
     })
@@ -48,14 +49,15 @@ userController.verifyUser = (req, res, next) => {
         console.log('no user in DB');
         res.redirect('/signup');
       } else {
-        console.log('check password');
-        if (result.rows[0].password === password) {
-          res.locals.id = result.rows[0].id;
-          return next();
-        } else {
-          res.redirect('/signup');
+          console.log('check password');
+          if (result.rows[0].password === password) {
+            // insert logic for randomized, more secure ssid
+            res.locals.id = result.rows[0].id;
+            return next();
+          } else {
+            res.redirect('/signup');
+          }
         }
-      }
     })
     .catch((err) => {
       return next({
