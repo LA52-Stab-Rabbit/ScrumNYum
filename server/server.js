@@ -1,6 +1,9 @@
   const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+dotenv.config();
+//console.log('env:', process.env);
 
 // import controllers
 const userController = require('./controllers/userController.js');
@@ -15,6 +18,7 @@ app.use(cookieParser()); // allow parsing of req.cookies
 
 // require routers
 const apiRouter = require('./routes/api.js');
+const oauthRouter = require('./routes/Oauth.js');
 
 // serve static assets
 app.use('/src', express.static(path.resolve(__dirname, '../src')));
@@ -22,6 +26,9 @@ app.use('/dist', express.static(path.resolve(__dirname, '../dist')));
 
 // route to apiRouter
 app.use('/api', apiRouter);
+
+// route to oauthRouter
+app.use('/oauth', oauthRouter);
 
 // get routes
 app.get(['/', '/signup'], (req, res) => {
