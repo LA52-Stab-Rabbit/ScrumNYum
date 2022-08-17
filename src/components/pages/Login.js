@@ -32,11 +32,14 @@ function Login() {
             name='password'
             placeholder='Enter Password'
           />
-
           <button type='submit'>Login</button>
           {/* //Login button makes fetch request onClick, if truthy links to /settings */}
         </form>
-
+        {/* button for signing in with thirdparty */}
+        <div className='oauthbtn'>
+          <a className="btn" href="/oauth">SIGN IN WITH GITHUB</a>
+          <p className="sign-in-text">in order to get started</p>
+        </div>
         <Link to='/signup'>
           <button type='button'>Sign up</button>
         </Link>
