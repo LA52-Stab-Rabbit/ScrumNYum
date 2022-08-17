@@ -23,6 +23,8 @@ app.use('/dist', express.static(path.resolve(__dirname, '../dist')));
 // route to apiRouter
 app.use('/api', apiRouter);
 
+
+
 // get routes
 app.get(['/', '/signup'], (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, '../src/index.html'));

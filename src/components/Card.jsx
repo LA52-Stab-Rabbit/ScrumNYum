@@ -4,7 +4,7 @@ function Card(props) {
   console.log(props.cards)
   const dragStart = event => {
     const target = event.target;
-
+    console.log('drag start!');
     event.dataTransfer.setData('card_id', target.id);
   }
 

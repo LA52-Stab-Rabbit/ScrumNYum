@@ -48,6 +48,47 @@ function Scrum(props) {
     setCards([...cards, taskObj])
   }
 
+  // Save workspace
+  const saveWorkspace = (event) => {
+    event.preventDefault(); 
+    const workspaceObj = {}
+    // Grab DOM from Board Area
+    // const workspace = document.getElementsByClassName('board-area');
+    const board = document.getElementsByClassName('board');
+    // const stickieTitle = document.getElementsByClassName('stickie');
+
+    // console.log('board: ', board);
+    // console.log('board header', board[0].children[0].textContent) //grabs header of column
+    // console.log('board-sticky-title', board[0].children[1].children[0].textContent) 
+    // console.log('board-sticky-description', board[0].children[1].children[1].textContent) 
+    // console.log('board-sticky-snack', board[0].children[1].children[2].textContent) 
+
+    for (let i = 0; i < board.length; i++){
+      let tempColumn = board[i].children[0].textContent;
+      workspaceObj[tempColumn] = {}; 
+      for (let j = 1; j < board[i].children.length; j++){
+        let tempSticky = 'sticky' + j;
+        workspaceObj[tempColumn][tempSticky] = {};
+          workspaceObj[tempColumn][tempSticky].title = board[i].children[j].children[0].textContent;
+          workspaceObj[tempColumn][tempSticky].description = board[i].children[j].children[1].textContent;
+          workspaceObj[tempColumn][tempSticky].snack = board[i].children[j].children[2].textContent;
+      }
+    }
+
+    console.log(workspaceObj);
+
+    // console.log('board-sticky', board[0].children) //grabs first sticky
+    // console.log('card: ', stickie);
+    // console.log('sticky[0]', stickie[0].childNodes[0].innerText);
+    // console.log('card_properties: ', card_properties);
+    // console.log('workspace: ', workspace)
+    // console.log('workspace.childNodes: ', workspace.childNodes);
+    // Parse into a JSON object
+    // Make a put request to front-end with JSON object
+  }
+
+
+
   return (
     <div className='scrum-container'>
       <header className="scrum-header">
@@ -87,10 +128,10 @@ function Scrum(props) {
             </Card> */}
             {cards.map((card, index) => {
               return (
-                <Card id={'card-' + index} className='card' draggable='true'>
-                  <p>{card['task-title']}</p>
-                  <p>Description: {card['task-desc']}</p>
-                  <p>Snack: {card.snack}</p>
+                <Card id={'card-' + index} className='stickie' draggable='true'>
+                  <p className='stickie-title'>{card['task-title']}</p>
+                  <p className='stickie-description'>Description: {card['task-desc']}</p>
+                  <p className='stickie-snack'>Snack: {card.snack}</p>
                 </Card>
               )
             })}
@@ -103,7 +144,11 @@ function Scrum(props) {
           </ Board>
           <Board id='board-5' className='board' title='Complete' >
           </ Board>
+          <div className = 'add-section'>
+            + Add Section
+          </div>
         </div>
+        <button className='save-button' onClick={saveWorkspace}>Save</button>
       </main>
     </div>
   );
