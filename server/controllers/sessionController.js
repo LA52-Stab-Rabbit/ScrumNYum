@@ -15,6 +15,7 @@ sessionController.isLoggedIn = (req, res, next) => {
 
   db.query(query, [req.cookies.ssid])
     .then((result) => {
+      console.log('session controller query result:', result)
       if (result.rows.length > 0) res.locals.signedIn = true;
       else res.locals.signedIn = false;
       return next();
@@ -22,8 +23,8 @@ sessionController.isLoggedIn = (req, res, next) => {
 
     .catch((err) => {
       return next({
-        log: 'Express error handler caught unknown middleware error',
-        status: 400,
+        log: 'Express error handler caught error in sessioncontroller',
+        status: 500,
         message: { err: 'in sessionController.isLoggedIn' },
       });
     });
