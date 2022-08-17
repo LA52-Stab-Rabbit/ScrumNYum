@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/TheYummies/ScrumNYum#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "babel": "^6.23.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
@@ -45,6 +46,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "node-fetch": "^3.2.10",
     "nodemon": "^2.0.19",
     "style-loader": "^3.3.1",
     "webpack": "^5.74.0",
