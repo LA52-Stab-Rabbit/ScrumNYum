@@ -53,6 +53,7 @@ userController.verifyUser = (req, res, next) => {
           if (result.rows[0].password === password) {
             // insert logic for randomized, more secure ssid
             res.locals.id = result.rows[0].id;
+            console.log('res.locals.id!!!: ', res.locals.id)
             return next();
           } else {
             res.redirect('/signup');
