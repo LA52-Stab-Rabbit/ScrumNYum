@@ -53,6 +53,8 @@ app.post(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   (req, res) => {
+    // creating a cookie with value of userid
+    res.cookie("userid", res.locals.id, {httpOnly: true});
     console.log('login route complete');
     res.redirect('/scrum');
   }

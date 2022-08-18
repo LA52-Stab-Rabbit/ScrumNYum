@@ -23,6 +23,12 @@ router.get('/workspaces', workspacesController.getWorkspaces, (req, res) => {
   return res.status(200).json({ workspaces: res.locals.workspaces });
 });
 
+//
+router.put('/workspaces', workspacesController.saveWorkspace, (req, res) => {
+  console.log('in save workspace route')
+  return res.status(200).send();
+})
+
 // WORKS
 router.post('/stickies', stickiesController.createStickies, (req, res) => {
   console.log('end of create stickies route');

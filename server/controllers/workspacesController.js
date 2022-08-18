@@ -63,7 +63,7 @@ workspacesController.deleteWorkspace = (req, res, next) => {
 // get request to api/workspaces and returning data - WORKS
 workspacesController.getWorkspaces = (req, res, next) => {
   console.log('in workspacesController.getWorkspaces');
-  const query = 'SELECT id FROM workspaces';
+  const query = 'SELECT * FROM workspace';
   db.query(query)
     .then((data) => {
       res.locals.workspaces = data.rows;
@@ -79,6 +79,28 @@ workspacesController.getWorkspaces = (req, res, next) => {
       );
     });
 }
+
+// saving the current state of the workspace
+// put request to api/saveworkspace and rewrite the db 
+workspacesController.saveWorkspace = (req, res, next) => {
+  console.log('in .saveWorkspace');
+  const query = 'UPDATE workspace SET workspace = $1 WHERE id = $2'
+  db.query(query, [req.body.workspace, req.body.id])
+   .then((data) => {
+    res.locals.workspaces = data.rows;
+    return next();
+   })
+   .catch((err) => {
+    return next(
+      createErr({
+        method:'saveWorkspace',
+        type: 'middleware error',
+        err:err,
+      })
+    );
+   });
+}
+
 
 // update workspace in workspace table but not returning anything
 // workspacesController.updateWorkspace = (req, res, next) => {
