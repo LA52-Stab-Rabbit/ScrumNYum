@@ -11,7 +11,31 @@ cookieController.clearSSIDCookie = (req, res, next) => {
 cookieController.setSSIDCookie = (req, res, next) => {
   // set ssid cookie
   console.log('in cookieController.setSSIDCookie');
-  res.cookie('ssid', res.locals.id, { httpOnly: true });
+  const ssid = bcrypt.hash(`${res.locals.id} superCookie8675309`, 12)
+  res.locals.user.ssid = ssid;
+  res.cookie('ssid', res.locals.user.ssid, { httpOnly: true });
+  
+  const query = `
+  INSERT INTO users (ssid)  
+  VALUES
+  ($1)
+  `;
+
+  db.query(query, [ssid])
+  .then((response) => {
+    // insert logic for randomized, more secure ssid
+    res.locals.user.ssid = ssid;
+    return next();
+  })
+  .catch((err) => {
+    return next({
+      log: 'Express error in cookieController.setSSIDCookie',
+      status: 500,
+      message: {
+        err: 'error in cookieController.setSSIDCookie - issue with ssid assignment',
+      },
+    });
+  });
   return next();
 };
 

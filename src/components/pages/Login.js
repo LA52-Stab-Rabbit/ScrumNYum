@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
-  let navigate = useNavigate();
+  let navigate = useNavigate(); //useNavigate is react router hook
   function handleClick() {
     navigate('/signup');
   }

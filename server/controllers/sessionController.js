@@ -10,20 +10,22 @@ sessionController.isLoggedIn = (req, res, next) => {
   const query = `
   SELECT * 
   FROM sessions s
-  WHERE s.id = $1
+  WHERE s.id = $1 
   `;
+  //does s.id need to be changed to ssid now?
 
   db.query(query, [req.cookies.ssid])
     .then((result) => {
       console.log('session controller query result:', result)
-      if (result.rows.length > 0) res.locals.signedIn = true;
+      if (result.rows[0] === req.cookies.ssid) res.locals.signedIn = true; //does this need to become user specific?
       else res.locals.signedIn = false;
+      //do we need to redirect to signup
       return next();
     })
 
     .catch((err) => {
       return next({
-        log: 'Express error handler caught error in sessioncontroller',
+        log: 'Express error handler caught error in sessioncontroller.isLoggedIn',
         status: 500,
         message: { err: 'in sessionController.isLoggedIn' },
       });
@@ -36,7 +38,7 @@ sessionController.startSession = (req, res, next) => {
   //write code here
   console.log('in sessionController.startSession');
 
-  console.log('res.locals.id', res.locals.id);
+  console.log('res.locals.user.id', res.locals.user.id);
 
   const query = `
   INSERT INTO sessions (id) 
@@ -45,7 +47,7 @@ sessionController.startSession = (req, res, next) => {
   ON CONFLICT (id) DO NOTHING
   `;
 
-  db.query(query, [res.locals.id])
+  db.query(query, [res.locals.user.id])
     .then((response) => {
       return next();
     })

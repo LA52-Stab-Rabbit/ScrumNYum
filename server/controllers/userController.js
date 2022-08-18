@@ -1,4 +1,5 @@
 const db = require('../models/models.js');
+const bcrypt = require('bcrypt');
 
 const userController = {};
 
@@ -7,8 +8,8 @@ const userController = {};
 userController.createUser = (req, res, next) => {
   console.log('in userController.createUser');
   const { username, password } = req.body;
-
-  console.log(req.body);
+  const pass = bcrypt.hash(password, 12)
+ 
 
   const query = `
   INSERT INTO users (id, password)  
@@ -16,15 +17,15 @@ userController.createUser = (req, res, next) => {
   ($1, $2)
   `;
 
-  db.query(query, [username, password])
+  db.query(query, [username, pass])
     .then((response) => {
       // insert logic for randomized, more secure ssid
-      res.locals.id = username;
+      res.locals.user.id = username;
       return next();
     })
     .catch((err) => {
       return next({
-        log: 'Express error handler caught unknown middleware error',
+        log: 'Express error in userController.createUser',
         status: 400,
         message: {
           err: 'error in userController.createUser - issue with user creation',
@@ -35,13 +36,14 @@ userController.createUser = (req, res, next) => {
 
 userController.verifyUser = (req, res, next) => {
   console.log('in userController.verifyUser');
-
   const { username, password } = req.body;
+  if (!username || !password) return next('Missing username or password in userController.verifyUser.');
 
   const query = `
   SELECT * 
   FROM users u
-  WHERE u.id = $1  `;
+  WHERE u.id = $1  
+  `;
 
   db.query(query, [username])
     .then((result) => {
@@ -49,10 +51,10 @@ userController.verifyUser = (req, res, next) => {
         console.log('no user in DB');
         res.redirect('/signup');
       } else {
-          console.log('check password');
-          if (result.rows[0].password === password) {
-            // insert logic for randomized, more secure ssid
-            res.locals.id = result.rows[0].id;
+          console.log('checking password');
+          // insert logic for randomized, more secure ssid; try bcrypt compare if time
+          if (result.rows[0].password === bcrypt.hash(password, 12)) {
+            res.locals.user.id = result.rows[0].id;
             return next();
           } else {
             res.redirect('/signup');
@@ -61,8 +63,8 @@ userController.verifyUser = (req, res, next) => {
     })
     .catch((err) => {
       return next({
-        log: 'Express error handler caught unknown middleware error',
-        status: 400,
+        log: 'Express error handler caught unknown error in userController.verifyUser',
+        status: 500,
         message: {
           err: 'error in userController.verifyUser - login credentials incorrect',
         },
