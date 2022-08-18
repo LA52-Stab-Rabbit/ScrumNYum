@@ -63,7 +63,7 @@ workspacesController.deleteWorkspace = (req, res, next) => {
 // get request to api/workspaces and returning data - WORKS
 workspacesController.getWorkspaces = (req, res, next) => {
   console.log('in workspacesController.getWorkspaces');
-  const query = 'SELECT id FROM workspaces';
+  const query = 'SELECT * FROM workspace';
   db.query(query)
     .then((data) => {
       res.locals.workspaces = data.rows;
@@ -84,8 +84,8 @@ workspacesController.getWorkspaces = (req, res, next) => {
 // put request to api/saveworkspace and rewrite the db 
 workspacesController.saveWorkspace = (req, res, next) => {
   console.log('in .saveWorkspace');
-  const query = 'UPDATE workspace SET workspace = $1 WHERE id = $2, name = $3'
-  db.query(query, [req.body, req.body._id, req.body._name])
+  const query = 'UPDATE workspace SET workspace = $1 WHERE id = $2'
+  db.query(query, [req.body.workspace, req.body.id])
    .then((data) => {
     res.locals.workspaces = data.rows;
     return next();

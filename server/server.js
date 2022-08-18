@@ -1,4 +1,4 @@
-  const path = require('path');
+const path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
@@ -53,6 +53,8 @@ app.post(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   (req, res) => {
+    // creating a cookie with value of userid
+    res.cookie("userid", res.locals.id, {httpOnly: true});
     console.log('login route complete');
     res.redirect('/scrum');
   }

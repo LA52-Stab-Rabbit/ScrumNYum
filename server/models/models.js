@@ -1,8 +1,8 @@
 const { Pool } = require('pg');
 
 const PG_URI =
-  'postgres://bafpqitj:4FYxU51_p0BpOIRD8OuK88bQFgyaBnD3@stampy.db.elephantsql.com/bafpqitj'; // og db
-  // 'postgres://qprcqlqw:aGBuoWaSMDv7R5JIyNZhElvRlVjLt4OE@ruby.db.elephantsql.com/qprcqlqw'; //Zq's db
+  // 'postgres://bafpqitj:4FYxU51_p0BpOIRD8OuK88bQFgyaBnD3@stampy.db.elephantsql.com/bafpqitj'; // og db
+  'postgres://qprcqlqw:aGBuoWaSMDv7R5JIyNZhElvRlVjLt4OE@ruby.db.elephantsql.com/qprcqlqw'; //Zq's db
 
 // create a new pool here using the connection string above
 const pool = new Pool({

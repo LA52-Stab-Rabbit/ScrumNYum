@@ -24,7 +24,7 @@ router.get('/workspaces', workspacesController.getWorkspaces, (req, res) => {
 });
 
 //
-router.put('/saveworkspace', workspacesController.saveWorkspace, (req, res) => {
+router.put('/workspaces', workspacesController.saveWorkspace, (req, res) => {
   console.log('in save workspace route')
   return res.status(200).send();
 })
