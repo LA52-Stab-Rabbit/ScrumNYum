@@ -8,10 +8,10 @@ userController.createUser = (req, res, next) => {
   console.log('in userController.createUser');
   const { username, password } = req.body;
 
-  console.log(req.body);
+  console.log('req body!: ', req.body);
 
   const query = `
-  INSERT INTO users (id, password)  
+  INSERT INTO users (username, password)  
   VALUES
   ($1, $2)
   `;
@@ -41,7 +41,7 @@ userController.verifyUser = (req, res, next) => {
   const query = `
   SELECT * 
   FROM users u
-  WHERE u.id = $1  `;
+  WHERE u.username = $1  `;
 
   db.query(query, [username])
     .then((result) => {
@@ -52,6 +52,7 @@ userController.verifyUser = (req, res, next) => {
           console.log('check password');
           if (result.rows[0].password === password) {
             // insert logic for randomized, more secure ssid
+            console.log('successful login!!');
             res.locals.id = result.rows[0].id;
             return next();
           } else {
