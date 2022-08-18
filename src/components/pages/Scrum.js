@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Board from '../Board.jsx';
 import Card from '../Card.jsx';
 import { useLocation, Link } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 
 
 
@@ -26,6 +27,9 @@ function Scrum(props) {
 
   // set state for cards
   const [cards, setCards] = useState([...dummyCard]);
+
+  // set state for cookies
+  const [cookies, setCookie] = useCookies();
 
   // STRETCH FEATURE:
   // below const allows us to grab state passed from
@@ -52,8 +56,7 @@ function Scrum(props) {
   const saveWorkspace = (event) => {
     event.preventDefault(); 
     const workspaceObj = {};
-    // Grab DOM from Board Area
-    // const workspace = document.getElementsByClassName('board-area');
+    // Grab DOM from Board Area and parse into an object
     const board = document.getElementsByClassName('board');
       for (let i = 0; i < board.length; i++){
         let tempColumn = board[i].children[0].textContent;
@@ -66,10 +69,44 @@ function Scrum(props) {
             workspaceObj[tempColumn][tempSticky].snack = board[i].children[j].children[2].textContent;
         }
     }
-    console.log(workspaceObj);
+    workspaceObj.ssid = cookies.ssid;
+
+    // Send put request to front-end
+    requestOptions = {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(workspaceObj)
+    };
+
+    fetch('/', requestOptions)
+      .then()
+      .catch((error) => {
+        console.log('error in sending put request');
+      })
+  }
+
+/*
+{
+  "To Start": {},
+  "In Progress": {},
+  "Blocked": {
+      "sticky1": {
+          "title": "Discuss Github Pronunciation",
+          "description": "Description: Is it github, or jithub?",
+          "snack": "Snack: Trail-Mix"
+      }
+  },
+  "In Review": {},
+  "Complete": {
+      "sticky1": {
+          "title": "Discuss Github Pronunciation",
+          "description": "Description: Is it github, or jithub?",
+          "snack": "Snack: Trail-Mix"
+      }
+  },
+  "ssid": "1234"
 }
-
-
+*/
 
   return (
     <div className='scrum-container'>
@@ -130,10 +167,13 @@ function Scrum(props) {
             + Add Section
           </div>
         </div>
-        <button className='save-button' onClick={saveWorkspace}>Save</button>
+        <button className='save-button' onClick={saveWorkspace}>Save
+        {cookies.user}</button>
       </main>
     </div>
   );
 }
 
+
 export default Scrum;
+
