@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 const db = require('../models/models.js');
+const bcrypt = require('bcrypt');
 const { Octokit, App } = require('octokit');
 
 const userController = {};
@@ -17,30 +18,34 @@ userController.createUser = (req, res, next) => {
   // else, go through normal create user flow 
   else {
     console.log('dealing with NON-Github user in userController.createUser');
+    console.log('req.body', req.body)
     username = req.body.username;
-    password = req.body.password;
+    password = bcrypt.hashSync(req.body.password, 12);
+    console.log('username is', username);
+    console.log('password is', password);
   }
 
   console.log('in userController.createUser');
-  
 
-  console.log(req.body);
-
+  // will need to change "id" to "username" in this query
   const query = `
   INSERT INTO users (id, password)  
   VALUES
-  ($1, $2)
+  ($1, $2);
   `;
 
   db.query(query, [username, password])
     .then((response) => {
       // insert logic for randomized, more secure ssid
-      res.locals.id = username;
+      res.locals.user = {};
+      res.locals.user.username = username;
+      console.log('username in .then after insert: ', res.locals.user.username)
       return next();
     })
     .catch((err) => {
+      console.log('in error handler in userController.createUser')
       return next({
-        log: 'Express error handler caught unknown middleware error',
+        log: 'Express error handler caught in userController.createUser',
         status: 400,
         message: {
           err: 'error in userController.createUser - issue with user creation',

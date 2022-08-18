@@ -36,7 +36,7 @@ sessionController.startSession = (req, res, next) => {
   //write code here
   console.log('in sessionController.startSession');
 
-  console.log('res.locals.id', res.locals.id);
+  console.log('res.locals.id', res.locals.user.username);
 
   const query = `
   INSERT INTO sessions (id) 
@@ -45,7 +45,7 @@ sessionController.startSession = (req, res, next) => {
   ON CONFLICT (id) DO NOTHING
   `;
 
-  db.query(query, [res.locals.id])
+  db.query(query, [res.locals.user.username])
     .then((response) => {
       return next();
     })
