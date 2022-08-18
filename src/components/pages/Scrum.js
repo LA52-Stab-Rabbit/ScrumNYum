@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Board from '../Board.jsx';
 import Card from '../Card.jsx';
 import { useLocation, Link } from 'react-router-dom';
@@ -31,6 +31,22 @@ function Scrum(props) {
   // set state for cookies
   const [cookies, setCookie] = useCookies();
 
+  /* Grab user workspace info before render */
+  // set state for workspace
+  const [workspace, setWorkspace] = useState(undefined);
+
+  useEffect(() => {
+    console.log('fetching data');
+    fetch('api/workspaces')
+      .then(response => response.json())
+      .then(response => {
+        // console.log('response.workspaces: ', response.workspaces)
+        // console.log('response.workspaces[cookies.ssid]: ', response.workspaces[cookies.ssid])
+        console.log('response.workspaces[cookies.ssid].workspace: ', response.workspaces[cookies.ssid].workspace)
+        setWorkspace(response.workspaces[cookies.ssid].workspace);
+      })
+  }, [])
+
   // STRETCH FEATURE:
   // below const allows us to grab state passed from
   // WSSelector to populate our title
@@ -52,7 +68,7 @@ function Scrum(props) {
     setCards([...cards, taskObj])
   }
 
-  // Save workspace
+  /* Save workspace button */
   const saveWorkspace = (event) => {
     event.preventDefault(); 
     const workspaceObj = {};
@@ -69,23 +85,32 @@ function Scrum(props) {
             workspaceObj[tempColumn][tempSticky].snack = board[i].children[j].children[2].textContent;
         }
     }
+    // Add ssid to workspaceObj to keep track of what user this workspace belongs to
     workspaceObj.ssid = cookies.ssid;
-    console.log(workspaceObj);
 
-    // Send put request to front-end
+    // Save workspace changes
     const requestOptions = {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(workspaceObj)
     };
 
-    console.log("before put request");
+    console.log("Sending PUT request");
     fetch('api/workspaces', requestOptions)
       .then(res => console.log(res))
       .catch((error) => {
         console.log('error in sending put request');
       });
   }
+
+  if (workspace === undefined) {
+    console.log('workspace is undefined');
+    return <>Still Loading...</>;
+  }
+
+  console.log(workspace);
+  
+
 
   return (
     <div className='scrum-container'>
@@ -153,6 +178,27 @@ function Scrum(props) {
   );
 }
 
-
 export default Scrum;
 
+/*
+{
+  "To Start":{},
+  "In Progress":{},
+  "Blocked":{},
+  "In Review":{},
+  "Complete":
+    {
+      "sticky1":{
+          "title":"Discuss Github Pronunciation",
+          "description":"Description: Is it github, or jithub?",
+          "snack":"Snack: Trail-Mix"
+        },
+      "sticky2":{
+          "title":"Discuss Github Pronunciation",
+          "description":"Description: Is it github, or jithub?",
+          "snack":"Snack: Trail-Mix"
+        }
+    },
+  "ssid":"2"
+}
+*/

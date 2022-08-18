@@ -85,8 +85,8 @@ CREATE TABLE public.sessions (
 -- ALTER TABLE public.userWorkspaceJoin ADD CONSTRAINT "userworkspacejoin_fk0" FOREIGN KEY ("User_UserID") REFERENCES  public.user("UserID");
 -- ALTER TABLE public.userWorkspaceJoin ADD CONSTRAINT "userworkspacejoin_fk1" FOREIGN KEY ("Workspace_WorkspaceID") REFERENCES  public.workspace("WorkspaceID");
 
-ALTER TABLE public.user_workspace ADD CONSTRAINT "user_workspace_fk0" FOREIGN KEY "users_id" REFERENCES public.users("id");
-ALTER TABLE public.user_workspace ADD CONSTRAINT "user_workspace_fk1" FOREIGN KEY "workspace_id" REFERENCES public.workspace("id");
+ALTER TABLE public.user_workspace ADD CONSTRAINT "user_workspace_fk0" FOREIGN KEY (user_id) REFERENCES public.users("id");
+ALTER TABLE public.user_workspace ADD CONSTRAINT "user_workspace_fk1" FOREIGN KEY (workspace_id) REFERENCES public.workspace("id");
 
 INSERT INTO public.users (username, password) VALUES ('test1', 'test1');
 INSERT INTO public.users (username, password) VALUES ('test2', 'test2');
