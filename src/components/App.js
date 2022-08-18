@@ -12,6 +12,7 @@ import Settings from './pages/Settings.js';
 import Scrum from './pages/Scrum.js';
 import Error from './pages/Error.js';
 
+
 function App() {
   return (
     <Router>

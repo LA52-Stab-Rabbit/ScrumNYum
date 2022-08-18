@@ -1,5 +1,6 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const loader = require('sass-loader');
 const { prototype } = require('webpack-dev-server');
 
 module.exports = {
@@ -27,9 +28,8 @@ module.exports = {
         },
       },
       {
-        test: /\.s?css/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.css|scss|sass$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },

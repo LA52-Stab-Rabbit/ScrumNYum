@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Board from '../Board.jsx';
 import Card from '../Card.jsx';
 import { useLocation, Link } from 'react-router-dom';
+import './scrum.scss';
 
 
 
@@ -50,16 +51,15 @@ function Scrum(props) {
 
   return (
     <div className='scrum-container'>
-      <header className="scrum-header">
-        <h1>My Workspace</h1>
-        {/* <h1>{location + ' Workspace'}</h1> */}
+      <div className="scrum-header">
+        <h2>Scrumptious</h2>
         <nav className='scrum-nav'>
           <Link to='/settings'>
             <button className="scrum-buttons" type='button'>Settings</button>
           </Link>
           <button className='scrum-buttons'>Logout</button>
         </nav>
-      </header>
+      </div>
       {/* Form element for post it creation */}
       <main className='scrum-main'>
         <form className='stickie-form' id='task_form' onSubmit={taskSubmit}>

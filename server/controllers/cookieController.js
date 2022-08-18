@@ -11,9 +11,8 @@ cookieController.clearSSIDCookie = (req, res, next) => {
 cookieController.setSSIDCookie = (req, res, next) => {
   // set ssid cookie
   console.log('in cookieController.setSSIDCookie');
-  const ssid = bcrypt.hash(`${res.locals.id} superCookie8675309`, 12)
-  res.locals.user.ssid = ssid;
-  res.cookie('ssid', res.locals.user.ssid, { httpOnly: true });
+  const ssid = bcrypt.hash(`${res.locals.user.username} superCookie8675309`, 12)
+  res.cookie('ssid', ssid, { httpOnly: true });
   
   const query = `
   INSERT INTO users (ssid)  

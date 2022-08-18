@@ -1,17 +1,26 @@
 body {
-  background-color:rgb(177, 245, 245);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image:url('./assets/background smaller scale.png');
+  background-repeat: round;
+  padding: 0;
+  margin: 0;
 }
 
 .scrum-header {
   display: flex;
   justify-content: space-between;
+  background-color: 246, 254, 219;
 }
 
-button {
+/* button {
   margin: 2px;
   border-radius: 10px;
   background-color: aliceblue;
-}
+} */
 
 /* .scrum-description-button {
   margin: 2px;
@@ -54,7 +63,7 @@ button {
 }
 
 .board {
-  background-color: aliceblue;
+  background-color: #026C7C;
   margin: auto;
   width: 200px;
   min-height: 100%;
@@ -77,11 +86,13 @@ button {
 
 .login-content {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
 .ws-selector-container {
-  background-color: crimson;
+  background-color: #026C7C;
   display: flex;
   justify-content: center;
   width: 33%;
@@ -114,7 +125,7 @@ button {
 }
 
 .user-settings-container {
-  background-color: orangered;
+  background-color: #026C7C;
   display: flex;
   justify-content: center;
   width: 33%;

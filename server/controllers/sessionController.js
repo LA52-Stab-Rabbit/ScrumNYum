@@ -12,14 +12,14 @@ sessionController.isLoggedIn = (req, res, next) => {
   FROM sessions s
   WHERE s.id = $1 
   `;
-  //does s.id need to be changed to ssid now?
+  // does s.id need to be changed to ssid now?
 
   db.query(query, [req.cookies.ssid])
     .then((result) => {
       console.log('session controller query result:', result)
       if (result.rows[0] === req.cookies.ssid) res.locals.signedIn = true; //does this need to become user specific?
       else res.locals.signedIn = false;
-      //do we need to redirect to signup
+      // do we need to redirect to signup
       return next();
     })
 
@@ -35,7 +35,7 @@ sessionController.isLoggedIn = (req, res, next) => {
 // StartSession - create and save a new Session into the database.
 
 sessionController.startSession = (req, res, next) => {
-  //write code here
+  // write code here
   console.log('in sessionController.startSession');
 
   console.log('res.locals.user.id', res.locals.user.id);

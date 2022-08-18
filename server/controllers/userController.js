@@ -8,11 +8,11 @@ const userController = {};
 userController.createUser = (req, res, next) => {
   console.log('in userController.createUser');
   const { username, password } = req.body;
-  const pass = bcrypt.hash(password, 12)
+  const pass = bcrypt.hashSync(password, 12); //or async await
  
 
   const query = `
-  INSERT INTO users (id, password)  
+  INSERT INTO users (username, password)  
   VALUES
   ($1, $2)
   `;
@@ -20,13 +20,13 @@ userController.createUser = (req, res, next) => {
   db.query(query, [username, pass])
     .then((response) => {
       // insert logic for randomized, more secure ssid
-      res.locals.user.id = username;
+      res.locals.user.username = username;
       return next();
     })
     .catch((err) => {
       return next({
         log: 'Express error in userController.createUser',
-        status: 400,
+        status: 500,
         message: {
           err: 'error in userController.createUser - issue with user creation',
         },
@@ -42,7 +42,7 @@ userController.verifyUser = (req, res, next) => {
   const query = `
   SELECT * 
   FROM users u
-  WHERE u.id = $1  
+  WHERE u.username = $1  
   `;
 
   db.query(query, [username])
@@ -52,9 +52,9 @@ userController.verifyUser = (req, res, next) => {
         res.redirect('/signup');
       } else {
           console.log('checking password');
-          // insert logic for randomized, more secure ssid; try bcrypt compare if time
+          // insert logic for randomized, more secure ssid; try bcrypt compare if time USE BCRYPT COMPARE
           if (result.rows[0].password === bcrypt.hash(password, 12)) {
-            res.locals.user.id = result.rows[0].id;
+            res.locals.user.username = result.rows[0].username;
             return next();
           } else {
             res.redirect('/signup');
