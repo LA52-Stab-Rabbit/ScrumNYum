@@ -49,6 +49,14 @@ CREATE TABLE public.snacks (
   OIDS=FALSE
 );
 
+CREATE TABLE public.sessions (
+	"id" varchar NOT NULL,
+	CONSTRAINT "session_pk" PRIMARY KEY ("id")
+) WITH (
+  -- what is OIDS???
+  OIDS=FALSE
+);
+
 -- CREATE TABLE public.userWorkspaceJoin (
 --   "id" integer NOT NULL,
 --   "User_UserID" varchar NOT NULL,

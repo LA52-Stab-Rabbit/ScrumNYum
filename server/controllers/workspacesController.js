@@ -84,8 +84,10 @@ workspacesController.getWorkspaces = (req, res, next) => {
 // put request to api/saveworkspace and rewrite the db 
 workspacesController.saveWorkspace = (req, res, next) => {
   console.log('in .saveWorkspace');
-  const query = 'UPDATE workspace SET workspace = $1 WHERE id = $2'
-  db.query(query, [req.body.workspace, req.body.id])
+  console.log('req.body: ', JSON.stringify(req.body));
+  console.log('req.body.ssid: ', req.body.ssid);
+  const query = 'UPDATE workspace SET workspace = $1 WHERE id = $2';
+  db.query(query, [JSON.stringify(req.body), req.body.ssid])
    .then((data) => {
     res.locals.workspaces = data.rows;
     return next();

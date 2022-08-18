@@ -70,43 +70,22 @@ function Scrum(props) {
         }
     }
     workspaceObj.ssid = cookies.ssid;
+    console.log(workspaceObj);
 
     // Send put request to front-end
-    requestOptions = {
+    const requestOptions = {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(workspaceObj)
     };
 
-    fetch('/', requestOptions)
-      .then()
+    console.log("before put request");
+    fetch('api/workspaces', requestOptions)
+      .then(res => console.log(res))
       .catch((error) => {
         console.log('error in sending put request');
-      })
+      });
   }
-
-/*
-{
-  "To Start": {},
-  "In Progress": {},
-  "Blocked": {
-      "sticky1": {
-          "title": "Discuss Github Pronunciation",
-          "description": "Description: Is it github, or jithub?",
-          "snack": "Snack: Trail-Mix"
-      }
-  },
-  "In Review": {},
-  "Complete": {
-      "sticky1": {
-          "title": "Discuss Github Pronunciation",
-          "description": "Description: Is it github, or jithub?",
-          "snack": "Snack: Trail-Mix"
-      }
-  },
-  "ssid": "1234"
-}
-*/
 
   return (
     <div className='scrum-container'>
@@ -168,7 +147,7 @@ function Scrum(props) {
           </div>
         </div>
         <button className='save-button' onClick={saveWorkspace}>Save
-        {cookies.user}</button>
+        </button>
       </main>
     </div>
   );
