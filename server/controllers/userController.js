@@ -8,8 +8,8 @@ const userController = {};
 userController.createUser = (req, res, next) => {
   console.log('in userController.createUser');
   const { username, password } = req.body;
-  const pass = bcrypt.hashSync(password, 12); //or async await
- 
+
+  console.log('req body!: ', req.body);
 
   const query = `
   INSERT INTO users (username, password)  
@@ -42,8 +42,7 @@ userController.verifyUser = (req, res, next) => {
   const query = `
   SELECT * 
   FROM users u
-  WHERE u.username = $1  
-  `;
+  WHERE u.username = $1  `;
 
   db.query(query, [username])
     .then((result) => {
@@ -51,10 +50,11 @@ userController.verifyUser = (req, res, next) => {
         console.log('no user in DB');
         res.redirect('/signup');
       } else {
-          console.log('checking password');
-          // insert logic for randomized, more secure ssid; try bcrypt compare if time USE BCRYPT COMPARE
-          if (result.rows[0].password === bcrypt.hash(password, 12)) {
-            res.locals.user.username = result.rows[0].username;
+          console.log('check password');
+          if (result.rows[0].password === password) {
+            // insert logic for randomized, more secure ssid
+            console.log('successful login!!');
+            res.locals.id = result.rows[0].id;
             return next();
           } else {
             res.redirect('/signup');
