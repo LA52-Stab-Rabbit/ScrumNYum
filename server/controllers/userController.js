@@ -88,6 +88,7 @@ userController.verifyUser = (req, res, next) => {
   }
 
   userController.handleGithubRedirect = (req, res, next) => {
+    // get code from GH
     const code = req.query.code;
     const body = {
       client_id: process.env.CLIENT_ID,
@@ -131,18 +132,21 @@ userController.verifyUser = (req, res, next) => {
       .then(result => {
         // attach username to res.locals.username
         console.log('result from OCTOKIT:', result.data.login);
-        const githubUsername = `github_${results.data.login}`;
+        const githubUsername = `github_${result.data.login}`;
         // BETTER WAY WITH OBJECT STRUCTURING(??)
         res.locals.githubUsername = githubUsername;
+        // github_parkersteinberg
 
 
-        // query db to see if account exists
+        // query db to see if github account exists in the db
         db.query(query, [githubUsername])
           .then((result) => {
-            // if user doesn't exist, pass them along to createUser
+            // if user doesn't exist, pass them along to createUser middleware
             if (result.rows.length === 0) {
+              console.log("SENDING USERCONTROLLER TO CREATEUSER");
               return userController.createUser(req, res, next)
             } else {
+              // instead, pass them to verifyuser 
                 console.log('check password');
                 if (result.rows[0].password === password) {
                   // insert logic for randomized, more secure ssid
