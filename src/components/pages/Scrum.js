@@ -42,8 +42,8 @@ function Scrum(props) {
       .then(response => {
         // console.log('response.workspaces: ', response.workspaces)
         // console.log('response.workspaces[cookies.ssid]: ', response.workspaces[cookies.ssid])
-        console.log('response.workspaces[cookies.ssid].workspace: ', response.workspaces[cookies.ssid].workspace)
-        setWorkspace(response.workspaces[cookies.ssid].workspace);
+        // console.log('response.workspaces[cookies.ssid].workspace: ', response.workspaces[cookies.ssid].workspace)
+        setWorkspace(JSON.parse(response.workspaces[cookies.ssid].workspace));
       })
   }, [])
 
@@ -94,7 +94,6 @@ function Scrum(props) {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(workspaceObj)
     };
-
     console.log("Sending PUT request");
     fetch('api/workspaces', requestOptions)
       .then(res => console.log(res))
@@ -108,8 +107,43 @@ function Scrum(props) {
     return <>Still Loading...</>;
   }
 
-  console.log(workspace);
-  
+  // console.log('workspace: ', workspace);
+
+  // Create mappable object
+  delete workspace.ssid;
+  const mappedWorkspace = [];
+  for (let key in workspace){
+    // mappedWorkspace.push({title: key})
+    if (Object.keys(workspace[key]).length){ //there exist stickies
+        let stickyArr = [];
+        for (let sticky in workspace[key]){
+            stickyArr.push(workspace[key][sticky]);
+        }
+        mappedWorkspace.push({title: key, sticky: stickyArr})
+    }
+    else{
+        mappedWorkspace.push({title: key})
+    }
+  } 
+
+  console.log('mappedWorkspace: ', mappedWorkspace);
+
+  const renderCard = (bulletin) => {
+    const stickyCard = [];
+    if(bulletin.hasOwnProperty('sticky')){
+      bulletin.sticky.map((stickie, index) => {
+        stickyCard.push(
+          <Card id={'card-' + index} className='stickie' draggable='true'>
+            <p className='stickie-title'>{stickie.title}</p>
+            <p className='stickie-title'>{stickie.description}</p>
+            <p className='stickie-title'>{stickie.snack}</p>
+          </Card>
+        )
+      })
+      return stickyCard
+    }
+    return
+  }
 
 
   return (
@@ -146,27 +180,14 @@ function Scrum(props) {
         </form>
         {/* 4 columns for our post its (w/ drag and drop ability) */}
         <div className='board-area'>
-          <Board id='board-1' className='board' title='To Start'>
-            {/* <Card id='card-1' className='card' draggable='true' >
-            </Card> */}
-            {cards.map((card, index) => {
-              return (
-                <Card id={'card-' + index} className='stickie' draggable='true'>
-                  <p className='stickie-title'>{card['task-title']}</p>
-                  <p className='stickie-description'>Description: {card['task-desc']}</p>
-                  <p className='stickie-snack'>Snack: {card.snack}</p>
-                </Card>
-              )
-            })}
-          </ Board>
-          <Board id='board-2' className='board' title='In Progress' >
-          </ Board>
-          <Board id='board-3' className='board' title='Blocked' >
-          </ Board>
-          <Board id='board-4' className='board' title='In Review' >
-          </ Board>
-          <Board id='board-5' className='board' title='Complete' >
-          </ Board>
+          {
+            mappedWorkspace.map((bulletin, index) => (
+              <Board id={'board' + index} className='board' title={bulletin.title}>
+                {renderCard(bulletin)}
+              </Board>
+            ))
+          }
+
           <div className = 'add-section'>
             + Add Section
           </div>
@@ -202,3 +223,81 @@ export default Scrum;
   "ssid":"2"
 }
 */
+
+// for each property
+{/* <Board id='board-5' className='board' title='{property text}' >
+</ Board> */}
+  // If that property has values in it
+    // for each sticky
+      // <Card id={'card-' + index} className='stickie' draggable='true'>
+      //   <p className='stickie-title'>{card['task-title']}</p>
+      //   <p className='stickie-description'>Description: {card['task-desc']}</p>
+      //   <p className='stickie-snack'>Snack: {card.snack}</p>
+      // </Card>
+
+// for (const key in workspace) {
+//   return (
+//     <Board id='board-1' className='board' title={key} >
+//       {
+//         if (workspace.hasOwnProperty(key)) {
+//           for (const ele in key) {
+//           return (
+//             <Card id={ele.index} className="stickie" draggable='true'>
+//               <p className='stickie-title'>{ele.title}</p>
+//               <p className='stickie-description'>Description: {ele.description}</p>
+//               <p className='stickie-snack'>Snack: {ele.snack}</p>
+//             </Card>)
+//           }
+//         }
+//       }
+//     </ Board>
+//   )
+// }
+
+// <Board id='board-1' className='board' title='To Start'>
+// {/* <Card id='card-1' className='card' draggable='true' >
+// </Card> */}
+// {cards.map((card, index) => {
+//   return (
+//     <Card id={'card-' + index} className='stickie' draggable='true'>
+//       <p className='stickie-title'>{card['task-title']}</p>
+//       <p className='stickie-description'>Description: {card['task-desc']}</p>
+//       <p className='stickie-snack'>Snack: {card.snack}</p>
+//     </Card>
+//   )
+// })}
+// </ Board>
+// <Board id='board-2' className='board' title='In Progress' >
+// </ Board>
+// <Board id='board-3' className='board' title='Blocked' >
+// </ Board>
+// <Board id='board-4' className='board' title='In Review' >
+// </ Board>
+// <Board id='board-5' className='board' title='Complete' >
+// </ Board>
+
+
+{/* <div className='board-area'>
+<Board id='board-1' className='board' title='To Start'>
+    {cards.map((card, index) => {
+      return (
+        <Card id={'card-' + index} className='stickie' draggable='true'>
+          <p className='stickie-title'>{card['task-title']}</p>
+          <p className='stickie-description'>Description: {card['task-desc']}</p>
+          <p className='stickie-snack'>Snack: {card.snack}</p>
+        </Card>
+      )
+    })}
+  </ Board>
+  <Board id='board-2' className='board' title='In Progress' >
+  </ Board>
+  <Board id='board-3' className='board' title='Blocked' >
+  </ Board>
+  <Board id='board-4' className='board' title='In Review' >
+  </ Board>
+  <Board id='board-5' className='board' title='Complete' >
+  </ Board>
+<div className = 'add-section'>
+  + Add Section
+</div>
+</div> */}

@@ -95,6 +95,27 @@ INSERT INTO public.users (username, password) VALUES ('test3', 'test3');
 INSERT INTO public.workspace (name, workspace) VALUES ('scrum1', '{column: 1}');
 INSERT INTO public.workspace (name, workspace) VALUES ('scrum2', '{column: 2}');
 INSERT INTO public.workspace (name, workspace) VALUES ('scrum3', '{column: 3}');
+INSERT INTO public.workspace (name, workspace) VALUES ('scrumtest', '{
+  "To Start":{},
+  "In Progress":{},
+  "Blocked":{},
+  "In Review":{},
+  "Complete":
+    {
+      "sticky1":{
+          "title":"Discuss Github Pronunciation",
+          "description":"Description: Is it github, or jithub?",
+          "snack":"Snack: Trail-Mix"
+        },
+      "sticky2":{
+          "title":"Discuss Github Pronunciation",
+          "description":"Description: Is it github, or jithub?",
+          "snack":"Snack: Trail-Mix"
+        }
+    },
+  "ssid":"2"
+}');
+
 
 INSERT INTO public.user_workspace VALUES (1, 1, 1);
 INSERT INTO public.user_workspace VALUES (2, 2, 2);
