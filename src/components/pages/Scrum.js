@@ -59,6 +59,7 @@ function Scrum(props) {
     const taskObj = Object.fromEntries(taskData.entries());
     event.target.reset();
     console.log(taskObj);
+
     // send get request to DB with task info in body
     // fetch('URL', {
     // method: 'POST',
@@ -145,7 +146,6 @@ function Scrum(props) {
     return
   }
 
-
   return (
     <div className='scrum-container'>
       <header className="scrum-header">
@@ -155,7 +155,9 @@ function Scrum(props) {
           <Link to='/settings'>
             <button className="scrum-buttons" type='button'>Settings</button>
           </Link>
-          <button className='scrum-buttons'>Logout</button>
+          <Link to='/'>
+            <button className='scrum-buttons'>Logout</button>
+          </Link>
         </nav>
       </header>
       {/* Form element for post it creation */}
@@ -188,9 +190,6 @@ function Scrum(props) {
             ))
           }
 
-          <div className = 'add-section'>
-            + Add Section
-          </div>
         </div>
         <button className='save-button' onClick={saveWorkspace}>Save
         </button>
