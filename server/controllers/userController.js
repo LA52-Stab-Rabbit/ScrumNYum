@@ -1,4 +1,5 @@
 const db = require('../models/models.js');
+const bcrypt = require('bcrypt');
 
 const userController = {};
 
@@ -16,16 +17,16 @@ userController.createUser = (req, res, next) => {
   ($1, $2)
   `;
 
-  db.query(query, [username, password])
+  db.query(query, [username, pass])
     .then((response) => {
       // insert logic for randomized, more secure ssid
-      res.locals.id = username;
+      res.locals.user.username = username;
       return next();
     })
     .catch((err) => {
       return next({
-        log: 'Express error handler caught unknown middleware error',
-        status: 400,
+        log: 'Express error in userController.createUser',
+        status: 500,
         message: {
           err: 'error in userController.createUser - issue with user creation',
         },
@@ -35,8 +36,9 @@ userController.createUser = (req, res, next) => {
 
 userController.verifyUser = (req, res, next) => {
   console.log('in userController.verifyUser');
-
   const { username, password } = req.body;
+  
+  if (!username || !password) return next('Missing username or password in userController.verifyUser.');
 
   const query = `
   SELECT * 
@@ -62,8 +64,8 @@ userController.verifyUser = (req, res, next) => {
     })
     .catch((err) => {
       return next({
-        log: 'Express error handler caught unknown middleware error',
-        status: 400,
+        log: 'Express error handler caught unknown error in userController.verifyUser',
+        status: 500,
         message: {
           err: 'error in userController.verifyUser - login credentials incorrect',
         },

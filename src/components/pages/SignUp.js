@@ -1,8 +1,9 @@
 import React from 'react';
+import './signUp.scss';
 
 function SignUp() {
   return (
-    <div>
+    <div className='SignUp_Container'>
       <h2>Sign Up</h2>
       <header>Sign Up Information</header>
       <form
@@ -12,12 +13,14 @@ function SignUp() {
         action='/signup'
       >
         <input
+          className='username'
           type='text'
           id='username'
           name='username'
           placeholder='Create Username'
         />
         <input
+          class='password'
           type='password'
           id='password'
           name='password'

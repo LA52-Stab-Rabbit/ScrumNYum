@@ -3,6 +3,8 @@ import Board from '../Board.jsx';
 import Card from '../Card.jsx';
 import { useLocation, Link } from 'react-router-dom';
 import { useCookies } from "react-cookie";
+import './scrum.scss';
+
 
 
 
@@ -149,8 +151,7 @@ function Scrum(props) {
   return (
     <div className='scrum-container'>
       <header className="scrum-header">
-        <h1>My Workspace</h1>
-        {/* <h1>{location + ' Workspace'}</h1> */}
+        <h2>Scrumptious</h2>
         <nav className='scrum-nav'>
           <Link to='/settings'>
             <button className="scrum-buttons" type='button'>Settings</button>
@@ -199,104 +200,3 @@ function Scrum(props) {
 }
 
 export default Scrum;
-
-/*
-{
-  "To Start":{},
-  "In Progress":{},
-  "Blocked":{},
-  "In Review":{},
-  "Complete":
-    {
-      "sticky1":{
-          "title":"Discuss Github Pronunciation",
-          "description":"Description: Is it github, or jithub?",
-          "snack":"Snack: Trail-Mix"
-        },
-      "sticky2":{
-          "title":"Discuss Github Pronunciation",
-          "description":"Description: Is it github, or jithub?",
-          "snack":"Snack: Trail-Mix"
-        }
-    },
-  "ssid":"2"
-}
-*/
-
-// for each property
-{/* <Board id='board-5' className='board' title='{property text}' >
-</ Board> */}
-  // If that property has values in it
-    // for each sticky
-      // <Card id={'card-' + index} className='stickie' draggable='true'>
-      //   <p className='stickie-title'>{card['task-title']}</p>
-      //   <p className='stickie-description'>Description: {card['task-desc']}</p>
-      //   <p className='stickie-snack'>Snack: {card.snack}</p>
-      // </Card>
-
-// for (const key in workspace) {
-//   return (
-//     <Board id='board-1' className='board' title={key} >
-//       {
-//         if (workspace.hasOwnProperty(key)) {
-//           for (const ele in key) {
-//           return (
-//             <Card id={ele.index} className="stickie" draggable='true'>
-//               <p className='stickie-title'>{ele.title}</p>
-//               <p className='stickie-description'>Description: {ele.description}</p>
-//               <p className='stickie-snack'>Snack: {ele.snack}</p>
-//             </Card>)
-//           }
-//         }
-//       }
-//     </ Board>
-//   )
-// }
-
-// <Board id='board-1' className='board' title='To Start'>
-// {/* <Card id='card-1' className='card' draggable='true' >
-// </Card> */}
-// {cards.map((card, index) => {
-//   return (
-//     <Card id={'card-' + index} className='stickie' draggable='true'>
-//       <p className='stickie-title'>{card['task-title']}</p>
-//       <p className='stickie-description'>Description: {card['task-desc']}</p>
-//       <p className='stickie-snack'>Snack: {card.snack}</p>
-//     </Card>
-//   )
-// })}
-// </ Board>
-// <Board id='board-2' className='board' title='In Progress' >
-// </ Board>
-// <Board id='board-3' className='board' title='Blocked' >
-// </ Board>
-// <Board id='board-4' className='board' title='In Review' >
-// </ Board>
-// <Board id='board-5' className='board' title='Complete' >
-// </ Board>
-
-
-{/* <div className='board-area'>
-<Board id='board-1' className='board' title='To Start'>
-    {cards.map((card, index) => {
-      return (
-        <Card id={'card-' + index} className='stickie' draggable='true'>
-          <p className='stickie-title'>{card['task-title']}</p>
-          <p className='stickie-description'>Description: {card['task-desc']}</p>
-          <p className='stickie-snack'>Snack: {card.snack}</p>
-        </Card>
-      )
-    })}
-  </ Board>
-  <Board id='board-2' className='board' title='In Progress' >
-  </ Board>
-  <Board id='board-3' className='board' title='Blocked' >
-  </ Board>
-  <Board id='board-4' className='board' title='In Review' >
-  </ Board>
-  <Board id='board-5' className='board' title='Complete' >
-  </ Board>
-<div className = 'add-section'>
-  + Add Section
-</div>
-</div> */}
