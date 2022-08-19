@@ -17,7 +17,7 @@ userController.createUser = (req, res, next) => {
   ($1, $2)
   `;
 
-  db.query(query, [username, pass])
+  db.query(query, [username, password])
     .then((response) => {
       // insert logic for randomized, more secure ssid
       res.locals.user.username = username;

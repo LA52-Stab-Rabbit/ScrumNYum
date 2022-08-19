@@ -151,7 +151,9 @@ function Scrum(props) {
   return (
     <div className='scrum-container'>
       <header className="scrum-header">
-        <h2>Scrumptious</h2>
+        <div>
+          <h2>Scrumptious</h2>
+        </div>
         <nav className='scrum-nav'>
           <Link to='/settings'>
             <button className="scrum-buttons" type='button'>Settings</button>
@@ -163,7 +165,8 @@ function Scrum(props) {
       </header>
       {/* Form element for post it creation */}
       <main className='scrum-main'>
-        <form className='stickie-form' id='task_form' onSubmit={taskSubmit}>
+        <div className="scrum-main__form-container">
+        <form className='stickie-form scrum-main__form' id='task_form' onSubmit={taskSubmit}>
           {/* Title, description, snack */}
           {/* <label htmlFor='task-title'>Title:</label> */}
           <input required type='text' name='task-title' id='task-title' placeholder='Title' ></input>
@@ -181,6 +184,7 @@ function Scrum(props) {
           <input required type='text' name='snack' className='snack-text' id='snack' placeholder='Snack' ></input>
           <input type='submit' value='Submit' className='scrum-description-button'></input>
         </form>
+        </div>
         {/* 4 columns for our post its (w/ drag and drop ability) */}
         <div className='board-area'>
           {

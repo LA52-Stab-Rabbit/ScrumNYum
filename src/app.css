@@ -1,9 +1,6 @@
 body {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-image:url('./assets/background smaller scale.png');
   background-repeat: round;
   padding: 0;
@@ -28,12 +25,12 @@ body {
   background-color: aliceblue;
 } */
 
-.stickie-form {
+/* .stickie-form {
   width: 100%;
   justify-content: center;
-}
+} */
 
-.stickie-description {
+/* .stickie-description {
   display: block;
   width: 250px;
   height: 200px;
@@ -45,21 +42,22 @@ body {
   resize: none;
   margin-top: 10px;
   margin-bottom: 10px;
-}
+} */
 .snack-text {
   display: block;
   margin-bottom: 10px;
 }
 
 .board-area {
-  background-color: rgb(175, 175, 226);
+  background-color: white;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-auto-flow: column;
   margin-left: 150px;
   margin-right: 150px;
   margin-top: 50px;
-  border: solid;
+  border: 2px solid #026C7C;
+  padding: 20px;
 }
 
 .board {

@@ -1,16 +1,28 @@
-.SignUp_Container {
-  
-  width: 400px;
-  height: 600px;
+.signup {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #026C7C;
+  justify-content: center;
+  height: 100vh;
+
   color: #FFFFFF;
-  border: 2px solid #01444f;
-  border-radius: 6px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+
+  &__container {
+    background-color: #026C7C;
+    border: 2px solid #026C7C;
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    padding: 32px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 6px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  }
 }
+
+
 
 .signUpForm {
   display: flex;
@@ -20,13 +32,13 @@
   color: white;
 }
 h2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: inline;
   font-size: 40px;
-  margin-top: 60px;
-  margin-bottom: 1000px;
+  margin: 4px 0px 0px 4px;
   font-family: 'Vegan Style Personal Use', sans-serif;
+  height: 100%;
+  line-height: unset;
+  
 }
 button {
   background-color: white;
