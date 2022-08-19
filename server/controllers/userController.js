@@ -37,6 +37,7 @@ userController.createUser = (req, res, next) => {
 userController.verifyUser = (req, res, next) => {
   console.log('in userController.verifyUser');
   const { username, password } = req.body;
+  
   if (!username || !password) return next('Missing username or password in userController.verifyUser.');
 
   const query = `

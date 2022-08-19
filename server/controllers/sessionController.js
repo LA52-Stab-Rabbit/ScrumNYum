@@ -17,7 +17,7 @@ sessionController.isLoggedIn = (req, res, next) => {
   db.query(query, [req.cookies.ssid])
     .then((result) => {
       console.log('session controller query result:', result)
-      if (result.rows[0] === req.cookies.ssid) res.locals.signedIn = true; //does this need to become user specific?
+      if (result.rows[0].id === req.cookies.ssid) res.locals.signedIn = true; //does this need to become user specific?
       else res.locals.signedIn = false;
       // do we need to redirect to signup
       return next();
@@ -38,7 +38,7 @@ sessionController.startSession = (req, res, next) => {
   // write code here
   console.log('in sessionController.startSession');
 
-  console.log('res.locals.user.id', res.locals.user.id);
+  console.log('res.locals.id', res.locals.id);
 
   const query = `
   INSERT INTO sessions (id) 
@@ -47,7 +47,7 @@ sessionController.startSession = (req, res, next) => {
   ON CONFLICT (id) DO NOTHING
   `;
 
-  db.query(query, [res.locals.user.id])
+  db.query(query, [res.locals.id])
     .then((response) => {
       return next();
     })
